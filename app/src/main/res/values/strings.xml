@@ -1,0 +1,64 @@
+<resources>
+    <string-array name="price_options">
+        <item>Không chọn</item>
+        <item>Thấp đến Cao</item>
+        <item>Cao đến Thấp</item>
+    </string-array>
+    <string-array name="price_level_options">
+        <item>Tất cả</item>
+        <item>Dưới 2 triệu</item>
+        <item>2 - 5 triệu</item>
+        <item>5 - 10 triệu</item>
+        <item>Trên 10 triệu</item>
+    </string-array>
+    <string name="app_name">AltriaPhone</string>
+    <string name="title_activity_search_phone">SearchPhoneActivity</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string-array name="phone_brands">
+        <item>vivo</item>
+        <item>Xiaomi</item>
+        <item>Oppo</item>
+        <item>Samsung</item>
+        <item>Realme</item>
+        <item>Motorola</item>
+        <item>Honor</item>
+        <item>Huawei</item>
+        <item>ZTE</item>
+        <item>Infinix</item>
+        <item>Tecno</item>
+        <item>Nokia</item>
+        <item>Blackview</item>
+        <item>TCL</item>
+        <item>Doogee</item>
+        <item>Ulefone</item>
+        <item>OnePlus</item>
+        <item>Lenovo</item>
+        <item>LG</item>
+        <item>Apple</item>
+        <item>Asus</item>
+        <item>Lava</item>
+        <item>Gionee</item>
+        <item>BLU</item>
+        <item>Yezz</item>
+        <item>Sony</item>
+        <item>Wiko</item>
+        <item>alcatel</item>
+        <item>Google</item>
+        <item>Coolpad</item>
+        <item>Sharp</item>
+        <item>HTC</item>
+        <item>Meizu</item>
+        <item>T-Mobile</item>
+        <item>Micromax</item>
+        <item>Energizer</item>
+        <item>Cat</item>
+        <item>Allview</item>
+        <item>Philips</item>
+        <item>Fairphone</item>
+        <item>Microsoft</item>
+        <item>Nothing</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:padding="8dp"
+            android:src="@drawable/arrow"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/search"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/edittext_background"
+            android:drawableStart="@drawable/ic_search_black_24dp"
+            android:gravity="center|left"
+            android:paddingStart="10dp"
+            android:text=" Tìm điện thoại nào?"
+            android:textAllCaps="false"
+            android:textColor="#939090" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="4dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_new_old"
+            android:layout_width="0dp"
+            android:background="@drawable/border"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:text="Mới" />
+
+        <Spinner
+            android:background="@drawable/border"
+            android:id="@+id/spinner_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:entries="@array/price_options" />
+
+        <Spinner
+            android:background="@drawable/border"
+            android:id="@+id/spinner_price_level"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:entries="@array/price_level_options" />
+
+        <Button
+            android:background="@drawable/border"
+            android:id="@+id/btn_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:text="Lọc"/>
+
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGray">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Có 123 sản phẩm"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:id="@+id/notification"
+                />
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="5dp"
+            android:id="@+id/grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"
+            android:orientation="vertical">
+        </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:orientation="vertical"
+            android:gravity="center">
+            <Button
+            android:id="@+id/hide" android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_background"
+            android:text="Ẩn bớt"
+            android:textSize="16dp"/>
+            <Button
+            android:id="@+id/show_more" android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_background"
+            android:text="Xem thêm"
+            android:textSize="16dp"/>
+
+        </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="175dp"
+    android:layout_height="260dp"
+    android:elevation="10dp"
+    android:layout_margin="8dp"
+    android:id="@+id/cardview_product_cart"
+    android:background="@drawable/border7"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:id="@+id/img"
+        android:layout_gravity="center_horizontal" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/white_bg"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+    <TextView
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:id="@+id/brand_name"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:background="@color/colorGray"
+        android:text="Iphone 15 Pro Max Ultra Mega Super"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:padding="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:id="@+id/size"
+            android:text="10'"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:background="@drawable/edittext_background"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="match_parent"
+            android:id="@+id/ram"
+            android:text="16GB"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:background="@drawable/edittext_background"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="match_parent"
+            android:id="@+id/rom"
+            android:text="256GB"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:background="@drawable/edittext_background"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:id="@+id/price"
+        android:textColor="@color/colorRed"
+        android:gravity="right"
+        android:text="999,999,999"
+        android:textSize="20dp"
+        android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+</LinearLayout>
