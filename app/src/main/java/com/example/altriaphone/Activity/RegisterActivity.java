@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         Bundle bundle = new Bundle();
         String ID = "10";
-        User u = new User(ID,user.getText().toString(),password.getText().toString(), ten.getText().toString(),"",phone.getText().toString(), 0.0);
+        User u = new User(ID,user.getText().toString(),password.getText().toString(), ten.getText().toString(),"",phone.getText().toString(), 0.0, "");
         bundle.putSerializable("user", u);
         intent.putExtras(bundle);
         startActivity(intent);

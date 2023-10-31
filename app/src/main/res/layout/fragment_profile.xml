@@ -7,6 +7,7 @@
     android:background="@color/colorGray">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,11 +19,22 @@
         android:id="@+id/img_avt"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/edit_info"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/username"
@@ -37,7 +49,6 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/img_avt"
         app:layout_constraintTop_toBottomOf="@+id/img_avt" />
-
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -52,61 +63,166 @@
         android:id="@+id/money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100.000.000 VNĐ"
         android:textColor="#ffffff"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/name"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:visibility="gone"
+        android:id="@+id/changePassLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/white_bg"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_avt">
+        <TextView
+            android:layout_margin="8dp"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change password"/>
+        <EditText
+            android:id="@+id/ped_current_password"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Current Password"/>
+        <EditText
+            android:id="@+id/ped_newPass"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="New password"/>
+        <EditText
+            android:id="@+id/pred_confirm_newPass"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Confirm new password"/>
+        <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <Button
+                    android:id="@+id/btn_cancel_changePass"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="0dp"
+                        android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:text="Cancel"
+                    android:background="@drawable/edittext_background"/>
+                <Button
+                    android:id="@+id/btn_OK_changePass"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:text="OK"
+                    android:background="@drawable/edittext_background"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/editLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/white_bg"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_avt">
+        <TextView
+            android:layout_margin="8dp"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit your information"/>
+        <EditText
+            android:id="@+id/ped_name"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Full Name"/>
+        <EditText
+            android:id="@+id/ped_phone"
+            android:layout_margin="8dp"
+            android:inputType="phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Phone number"/>
+        <EditText
+            android:id="@+id/ped_email"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Email"/>
+        <EditText
+            android:id="@+id/ped_address"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Address"/>
+        <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <Button
+                    android:id="@+id/btn_cancel_edit"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="0dp"
+                        android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:text="Cancel"
+                    android:background="@drawable/edittext_background"/>
+                <Button
+                    android:id="@+id/btn_OK_edit"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:text="OK"
+                    android:background="@drawable/edittext_background"/>
+        </LinearLayout>
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/white_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
-            <LinearLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/border7"
-                android:elevation="5dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/edit"
-                    android:layout_gravity="center"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="5dp"
-                    app:srcCompat="@drawable/edit" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Edit"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
             <LinearLayout
 
@@ -133,10 +249,8 @@
                     android:text="Payment"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
-
             <LinearLayout
 
                 android:layout_width="wrap_content"
@@ -148,29 +262,59 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/logout"
+                    android:id="@+id/shipping"
                     android:layout_gravity="center"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    app:srcCompat="@drawable/logout" />
+                    app:srcCompat="@drawable/shipping" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Log out"
+                    android:text="Shipping"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/border7"
+                android:elevation="5dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/received"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    app:srcCompat="@drawable/received" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Delivered"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="More infomations"
+            android:textSize="18dp"
+            android:layout_margin="8dp"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/appCompatImageView2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="10dp"
@@ -180,7 +324,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -196,16 +341,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="03939212"
                 android:textAlignment="viewEnd"
                 android:textColor="#5b5b5b"
                 android:textSize="18sp" />
         </LinearLayout>
 
-
-
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/appCompatImageView3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="10dp"
@@ -215,7 +356,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Email:"
+                android:textColor="#5917e1"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textAlignment="viewEnd"
+                android:textColor="#5b5b5b"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_margin="10dp"
+            android:alpha="0.5"
+            android:background="#585858" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="12dp"
             android:orientation="horizontal">
 
             <TextView
@@ -231,15 +406,36 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="63 KimGiang, ThanhLiet, ThanhTri, HaNoi"
                 android:textAlignment="viewEnd"
                 android:textColor="#5b5b5b"
                 android:textSize="18sp" />
         </LinearLayout>
+        <Button
+        android:id="@+id/changePassword"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Change password"
+        android:background="@drawable/edittext_background"/>
+    <Button
+        android:id="@+id/log_out"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
 
-
-
-
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Logout"
+        android:background="@drawable/edittext_background"/>
+    <Button
+        android:id="@+id/about"
+        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="About"
+        android:background="@drawable/edittext_background"/>
     </LinearLayout>
-
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

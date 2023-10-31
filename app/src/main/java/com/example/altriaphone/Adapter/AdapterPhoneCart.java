@@ -103,7 +103,8 @@ public class AdapterPhoneCart extends RecyclerView.Adapter<AdapterPhoneCart.View
             MainActivity.listCart.remove(position);
             counts.remove(position);
             listCart.remove(position);
-            notifyItemRemoved(position);
+            notifyDataSetChanged();
+            updateTotal();
         });
         holder.count.setText(String.valueOf(counts.get(position)));
         double sum = item.getPrice() * counts.get(position);

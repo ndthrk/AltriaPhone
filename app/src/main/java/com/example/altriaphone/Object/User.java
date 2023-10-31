@@ -3,7 +3,7 @@ package com.example.altriaphone.Object;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String username, name, phone, ID, email, password;
+    private String username, name, phone, ID, email, password, address;
     private double money;
 
     public User(){
@@ -14,9 +14,10 @@ public class User implements Serializable {
         this.name = "";
         this.phone = "";
         this.money = 0;
+        this.address = "";
     }
 
-    public User(String ID, String username, String password, String name, String email, String phone,  double money) {
+    public User(String ID, String username, String password, String name, String email, String phone, double money, String address) {
         this.username = username;
         this.name = name;
         this.phone = phone;
@@ -24,8 +25,10 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.money = money;
+        this.address = address;
     }
-
+    public String getAddress(){ return address; }
+    public void setAddress(String address){ this.address = address; }
     public String getUsername() {
         return username;
     }

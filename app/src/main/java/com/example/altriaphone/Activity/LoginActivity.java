@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void DangNhap() {
-        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/users.json";
+        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/users_infomation.json";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
             new Response.Listener<JSONArray>() {
                 @Override
@@ -64,19 +64,20 @@ public class LoginActivity extends AppCompatActivity {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject itemObject = response.getJSONObject(i);
-                            String id = itemObject.getString("id");
+                            String id = itemObject.getString("ID");
                             String usern =  itemObject.getString("username");
                             String pass =  itemObject.getString("password");
                             String name =  itemObject.getString("name");
+                            double money =  itemObject.getDouble("money");
                             String phone =  itemObject.getString("phonenumber");
                             String mail = itemObject.getString("mail");
-                            double money =  itemObject.getDouble("money");
+                            String addr = itemObject.getString("address");
 
                             if (usern.equals(usernameText) && pass.equals(passwordText)) {
                                 success = true;
                                 wrong.setText("");
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                User user = new User(id, usern, pass, name,mail, phone, money);
+                                User user = new User(id, usern, pass, name,mail, phone, money, addr);
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 Bundle bundle = new Bundle();

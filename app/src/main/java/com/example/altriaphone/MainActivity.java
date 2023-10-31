@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -36,13 +38,19 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private boolean doubleClick = false;
-    static public final ArrayList<Product> itemList = new ArrayList<>(), listCart = new ArrayList<>();
+     public static ArrayList<Product> itemList = new ArrayList<>(),
+                                    listCart = new ArrayList<>(),
+                                    listShipping = new ArrayList<>(),
+                                    listDelivered = new ArrayList<>();
     public static ArrayList<String> arrBrand;
-    public static ArrayList<Integer> counts = new ArrayList<>();
+    public static ArrayList<Integer> counts = new ArrayList<>(),
+                                    count_Ship = new ArrayList<>(),
+                                    count_Delivered = new ArrayList<>();
     public static Map<String, ArrayList<Integer>> brands = new HashMap<>();
     public static AdapterPhone itemAdapter;
     public static AdapterBrand adapterBrand;
     public BottomNavigationView bottomNav;
+    ProgressBar progressBar;
     int newPosition, startingPosition=-1;
     Fragment fragment;
     public static User user = new User();
@@ -59,14 +67,27 @@ public class MainActivity extends AppCompatActivity {
         String [] arr = getResources().getStringArray(R.array.phone_brands);
         arrBrand = new ArrayList<>(Arrays.asList(arr));
         bottomNav = findViewById(R.id.bottom_nav);
+        progressBar = findViewById(R.id.progressBar);
 
         itemAdapter = new AdapterPhone(MainActivity.itemList, this, 10);
         adapterBrand = new AdapterBrand(MainActivity.brands, arrBrand,this);
 
-        LOAD_ALL_DATA();
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.nav_host_fragment, new HomeFragment())
-            .commit();
+        if (itemList.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+            LOAD_ALL_DATA(() -> {
+                progressBar.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, new HomeFragment())
+                        .commit();
+            });
+        }
+        else{
+            LOAD_CART();
+            getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, new HomeFragment())
+                        .commit();
+        }
+
         bottomNav.setOnItemSelectedListener(item ->  {
             fragment = null;
             newPosition = 0;
@@ -143,61 +164,107 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
-    public void LOAD_ALL_DATA(){
-        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/phone2020.json";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
-                response -> {
-                    itemList.clear();
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject itemObject = response.getJSONObject(i);
-
-                            int id = itemObject.getInt("id");
-                            String name = itemObject.getString("name");
-                            String brand = itemObject.getString("brand");
-                            String announced = itemObject.getString("announced");
-                            String resolution = itemObject.getString("resolution");
-                            String os = itemObject.getString("os");
-                            String chipset = itemObject.getString("chipset");
-                            String card_slot = itemObject.getString("card_slot");
-                            String rom = itemObject.getString("rom");
-                            String ram = itemObject.getString("ram");
-                            int num_of_mc = itemObject.getInt("num_of_mc");
-                            String pic_mc = itemObject.getString("pic_mc");
-                            int num_of_sc = itemObject.getInt("num_of_sc");
-                            String pic_sc = itemObject.getString("pic_sc");
-                            String jack = itemObject.getString("jack");
-                            String battery = itemObject.getString("battery");
-                            double size = itemObject.getDouble("size");
-                            double price = itemObject.getDouble("price");
-                            double screenarea = itemObject.getDouble("screenarea");
-                            int ppi = itemObject.getInt("ppi");
-                            String link = itemObject.getString("link");
-                            String img = itemObject.getString("img");
-
-                            Product item = new Product(id,name,brand,announced,size,resolution,os,chipset,card_slot,rom,ram,num_of_mc,pic_mc,num_of_sc, pic_sc,jack,battery,price,screenarea,ppi,link,img);
-                            itemList.add(item);
-
-                            brands.putIfAbsent(brand, new ArrayList<>());
-                            brands.get(brand).add(id);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    sortListPhone("announced", false);
-                    itemAdapter.notifyDataSetChanged();
-                    adapterBrand.notifyDataSetChanged();
-                }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(MainActivity.this, "Lỗi khi tải dữ liệu từ API", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        // Thực thi yêu cầu
-        Volley.newRequestQueue(MainActivity.this).add(jsonArrayRequest);
-
+    void LOAD_ALL_DATA(Runnable callback) {
+        LOAD_PHONE(() -> {
+            LOAD_CART();
+            callback.run();
+        });
     }
+    void clearData(){
+        listDelivered.clear();
+        listCart.clear();
+        listShipping.clear();
+        counts.clear();
+        count_Delivered.clear();
+        count_Ship.clear();
+    }
+    void LOAD_CART(){
+        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/cart.json";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
+            response -> {
+                clearData();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject itemObject = response.getJSONObject(i);
+                        String id_user = itemObject.getString("ID_user");
+                        if (id_user.equals(user.getID())){
+                            int id_phone = itemObject.getInt("ID_phone");
+                            int quantity = itemObject.getInt("quantity");
+                            String status = itemObject.getString("status");
+                            for (Product product : itemList){
+                                if (product.getId() == id_phone){
+                                    if (status.equals("pending")){
+                                        listCart.add(product);
+                                        counts.add(quantity);
+                                    } else if (status.equals("shipping")) {
+                                        listShipping.add(product);
+                                        count_Ship.add(quantity);
+                                    } else if (status.equals("delivered")) {
+                                        listDelivered.add(product);
+                                        count_Delivered.add(quantity);
+                                    }
+                                    break;
+                                }
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, error -> Toast.makeText(MainActivity.this, "Lỗi khi tải dữ liệu từ API", Toast.LENGTH_SHORT).show());
+        Volley.newRequestQueue(MainActivity.this).add(jsonArrayRequest);
+    }
+    void LOAD_PHONE(Runnable callback){
+
+            String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/list_phones.json";
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
+                    response -> {
+                        callback.run();
+                        itemList.clear();
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject itemObject = response.getJSONObject(i);
+
+                                int id = itemObject.getInt("id");
+                                String name = itemObject.getString("name");
+                                String brand = itemObject.getString("brand");
+                                String announced = itemObject.getString("announced");
+                                String resolution = itemObject.getString("resolution");
+                                String os = itemObject.getString("os");
+                                String chipset = itemObject.getString("chipset");
+                                String card_slot = itemObject.getString("card_slot");
+                                String rom = itemObject.getString("rom");
+                                String ram = itemObject.getString("ram");
+                                int num_of_mc = itemObject.getInt("num_of_mc");
+                                String pic_mc = itemObject.getString("pic_mc");
+                                int num_of_sc = itemObject.getInt("num_of_sc");
+                                String pic_sc = itemObject.getString("pic_sc");
+                                String jack = itemObject.getString("jack");
+                                String battery = itemObject.getString("battery");
+                                double size = itemObject.getDouble("size");
+                                double price = itemObject.getDouble("price");
+                                double screenarea = itemObject.getDouble("screenarea");
+                                int ppi = itemObject.getInt("ppi");
+                                String link = itemObject.getString("link");
+                                String img = itemObject.getString("img");
+
+                                Product item = new Product(id,name,brand,announced,size,resolution,os,chipset,card_slot,rom,ram,num_of_mc,pic_mc,num_of_sc, pic_sc,jack,battery,price,screenarea,ppi,link,img);
+                                itemList.add(item);
+
+                                brands.putIfAbsent(brand, new ArrayList<>());
+                                brands.get(brand).add(id);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        sortListPhone("announced", false);
+                        itemAdapter.notifyDataSetChanged();
+                        adapterBrand.notifyDataSetChanged();
+                    }, error -> Toast.makeText(MainActivity.this, "Lỗi khi tải dữ liệu từ API", Toast.LENGTH_SHORT).show());
+            Volley.newRequestQueue(MainActivity.this).add(jsonArrayRequest);
+    }
+
     public void sortListPhone(final String fieldName, final boolean increase) {
         Collections.sort(itemList, new Comparator<Product>() {
             @Override
