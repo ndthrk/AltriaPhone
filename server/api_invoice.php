@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Thực hiện truy vấn SQL và lấy dữ liệu từ cơ sở dữ liệu
-$sql = "SELECT * FROM cart";
+$sql = "SELECT * FROM invoice";
 $result = $conn->query($sql);
 
 while ($row[]=$result->fetch_assoc()) //line.Readline
@@ -22,7 +22,7 @@ while ($row[]=$result->fetch_assoc()) //line.Readline
     $json=json_encode($row);
 }
 echo ($json);
-file_put_contents("carts.json", $json);
+file_put_contents("invoices.json", $json);
 // Đóng kết nối
 $conn->close();
 ?>

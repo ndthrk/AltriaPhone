@@ -16,28 +16,55 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cart_user_phone`
+-- Table structure for table `cart`
 --
 
-DROP TABLE IF EXISTS `cart_user_phone`;
+DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cart_user_phone` (
+CREATE TABLE `cart` (
   `ID_user` int DEFAULT NULL,
   `ID_phone` int DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `status` text
+  `quantity` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cart_user_phone`
+-- Dumping data for table `cart`
 --
 
-LOCK TABLES `cart_user_phone` WRITE;
-/*!40000 ALTER TABLE `cart_user_phone` DISABLE KEYS */;
-INSERT INTO `cart_user_phone` VALUES (2,276,1,'delivered'),(1,36,3,'pending'),(2,694,2,'pending'),(2,927,2,'delivered'),(3,443,2,'delivered'),(0,1158,1,'shipping'),(2,8,3,'pending'),(1,363,1,'shipping'),(3,486,2,'delivered'),(0,1438,1,'pending'),(1,935,2,'pending'),(0,1670,2,'pending'),(1,1511,3,'delivered'),(2,617,2,'shipping'),(0,1063,2,'shipping'),(3,90,1,'shipping'),(0,394,3,'shipping'),(0,412,3,'pending'),(1,1310,1,'delivered'),(0,103,1,'pending');
-/*!40000 ALTER TABLE `cart_user_phone` ENABLE KEYS */;
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (0,634,2),(1,709,1),(0,1314,1),(2,1104,3),(3,148,2),(2,1455,1),(3,92,4),(2,268,4),(0,34,3),(2,1293,2),(3,232,2),(3,1503,4),(2,1411,1),(1,916,2),(2,991,3),(1,478,1),(2,905,1),(1,1642,3),(1,1131,1),(0,899,4);
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `invoice`
+--
+
+DROP TABLE IF EXISTS `invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `invoice` (
+  `ID` int DEFAULT NULL,
+  `ID_user` int DEFAULT NULL,
+  `ID_phone` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `name` text,
+  `phone` text,
+  `address` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice`
+--
+
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+INSERT INTO `invoice` VALUES (0,3,1178,2,'Haruki','099999999','Tokyo, Japan'),(1,1,1543,2,'Nguyen Duc Thai','098466666','Lamthao, PhuTho'),(2,1,289,1,'Duc Thai','098463333','Viettri, PhuTho'),(3,2,1133,4,'Altria','039397212','Hoangmai, Hanoi'),(4,3,211,2,'Sakura','088888888','Osaka, Japan'),(5,1,1343,4,'Nguyen Duc Thai','098466666','Lamthao, PhuTho'),(6,2,558,1,'Altria Pendragon','039393939','Bavi, Hanoi'),(7,0,309,4,'ADMIN','012345789','London, UK'),(8,1,905,4,'Nguyen Duc Thai','098466666','Lamthao, PhuTho'),(9,2,809,4,'Altria Pendragon','039393939','Bavi, Hanoi'),(10,2,1620,4,'Altria','039397212','Hoangmai, Hanoi'),(11,3,1327,2,'Sakura','088888888','Osaka, Japan'),(12,3,908,3,'Sakura','088888888','Osaka, Japan'),(13,1,1363,1,'Duc Thai','098463333','Viettri, PhuTho'),(14,2,1337,1,'Altria','039397212','Hoangmai, Hanoi');
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -122,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-31  7:36:12
+-- Dump completed on 2023-10-31 15:58:44
