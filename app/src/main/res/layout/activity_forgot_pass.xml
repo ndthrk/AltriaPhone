@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_login"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="35dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_launcher" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/milkshake"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="@color/purple_500"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="260dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/border9">
+    <EditText
+        android:id="@+id/fg_user"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:paddingStart="10dp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_person_black_login_24dp"
+        android:background="@drawable/border"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/fg_email"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:paddingStart="10dp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/email"
+        android:background="@drawable/border"
+        android:hint="Email"/>
+
+    <TextView
+        android:id="@+id/fg_not_success"
+        android:layout_width="wrap_content"
+        android:text=""
+        android:textColor="@color/colorRed"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/fg_send"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_selector3"
+        android:text="Send new password"
+        android:textSize="20dp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"/>
+
+    </LinearLayout>
+</LinearLayout>

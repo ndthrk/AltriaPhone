@@ -66,12 +66,7 @@ public class SearchActivity extends AppCompatActivity {
         }
         noti.setVisibility(View.GONE);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        back.setOnClickListener(view -> finish());
         search.clearFocus();
         search.setIconified(false);
         search.requestFocus();

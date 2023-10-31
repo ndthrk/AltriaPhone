@@ -67,6 +67,8 @@ public class CartFrangment extends Fragment implements View.OnClickListener{
 
         layoutEdit.setVisibility(View.GONE);
         infoNamePhone.setText(MainActivity.user.getName() + " | " + MainActivity.user.getPhone());
+        address.setText(MainActivity.user.getAddress());
+
         editInfo.setOnClickListener(view -> {
             layoutEdit.setVisibility(View.VISIBLE);
             editName.setText(MainActivity.user.getName());
@@ -99,7 +101,7 @@ public class CartFrangment extends Fragment implements View.OnClickListener{
                 Toast.makeText(getContext(), "Không được để trống thông tin!", Toast.LENGTH_SHORT).show();
             }
             else if (totalPay == 0) {
-                Toast.makeText(getContext(), "Không được để trống thông tin!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Không có sản phẩm nào", Toast.LENGTH_SHORT).show();
             } else{
                 doOrder();
             }
@@ -126,9 +128,34 @@ public class CartFrangment extends Fragment implements View.OnClickListener{
             showNeedPayment();
         }
         else{
+            Thanhtoan(money, totalPay);
+        }
+    }
+    void Thanhtoan(double money, double totalPay){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Xác nhận");
+        builder.setMessage("Bạn chắc chắn mua không?");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            for (int i = 0; i < MainActivity.listCart.size(); i++){
+                MainActivity.listDelivered.add(MainActivity.listCart.get(i));
+                MainActivity.count_Delivered.add(MainActivity.counts.get(i));
+                MainActivity.add_invoice.add(address.getText().toString());
+                MainActivity.id_invoice.add(MainActivity.lastIDInvoice);
+                String[] splitS = infoNamePhone.getText().toString().split(" \\| ");
+                MainActivity.name_invoice.add(splitS[0]);
+                MainActivity.phone_invoice.add(splitS[1]);
+
+                MainActivity.lastIDInvoice += 1;
+                MainActivity.counts.set(i, 0);
+            }
             MainActivity.user.setMoney(money - totalPay);
             showOrderSuccess();
-        }
+        });
+        builder.setNegativeButton("Huỷ", (dialog, which) -> dialog.dismiss());
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
     private void showOrderSuccess() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

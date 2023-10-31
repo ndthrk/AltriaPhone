@@ -1,4 +1,5 @@
 <resources>
+    <string name="aboutme">Me: a42048 Nguyễn Đức Thái.\nApp AltriaPhone: Ứng dụng bán điện thoại với hơn 1600 sản phẩm hot trên thị trường hiện nay với các tính năng cơ bản.\nDữ liệu thu thập bằng Python.\nNguồn thu thập: gsmarea.com.\nNếu có thắc mắc hoặc ứng dụng không ổn định, hãy liên hệ với chúng tôi để được hỗ trợ:\n - Email: sieuxayda@cap3.pd\n - Tell: 0 full 9</string>
     <string-array name="price_options">
         <item>Không chọn</item>
         <item>Thấp đến Cao</item>

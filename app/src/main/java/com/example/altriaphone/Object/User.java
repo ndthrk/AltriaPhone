@@ -3,12 +3,13 @@ package com.example.altriaphone.Object;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String username, name, phone, ID, email, password, address;
+    private String username, name, phone, email, password, address;
     private double money;
+    int ID;
 
     public User(){
         this.email = "";
-        this.ID = "";
+        this.ID = -1;
         this.username = "";
         this.password = "";
         this.name = "";
@@ -17,7 +18,7 @@ public class User implements Serializable {
         this.address = "";
     }
 
-    public User(String ID, String username, String password, String name, String email, String phone, double money, String address) {
+    public User(int ID, String username, String password, String name, String email, String phone, double money, String address) {
         this.username = username;
         this.name = name;
         this.phone = phone;
@@ -57,7 +58,7 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 

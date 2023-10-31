@@ -53,18 +53,17 @@ public class LoginActivity extends AppCompatActivity {
             passwordText =password.getText().toString().trim();
             DangNhap();
         });
+        forgot.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, ForgotPassActivity.class)));
     }
 
     private void DangNhap() {
         String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/users_infomation.json";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
-            new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
+                response -> {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject itemObject = response.getJSONObject(i);
-                            String id = itemObject.getString("ID");
+                            int id = itemObject.getInt("ID");
                             String usern =  itemObject.getString("username");
                             String pass =  itemObject.getString("password");
                             String name =  itemObject.getString("name");
@@ -92,8 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (!success){
                         wrong.setText("Thông tin tài khoản hoặc mật khẩu không chính xác!");
                     }
-                }
-            }, error -> Toast.makeText(LoginActivity.this, "Lỗi khi tải dữ liệu từ API", Toast.LENGTH_SHORT).show());
+                }, error -> Toast.makeText(LoginActivity.this, "Lỗi khi tải dữ liệu từ API", Toast.LENGTH_SHORT).show());
 
         Volley.newRequestQueue(this).add(jsonArrayRequest);
     }

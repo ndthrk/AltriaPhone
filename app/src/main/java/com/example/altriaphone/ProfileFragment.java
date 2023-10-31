@@ -17,14 +17,16 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.altriaphone.Activity.ListInvoiceActivity;
 import com.example.altriaphone.Activity.LoginActivity;
+import com.example.altriaphone.Activity.PaymentActivity;
 
 import java.text.DecimalFormat;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
     public View root;
     TextView username, name, money, phone, email, address;
-    ImageView edit, payment, shipping, delivered;
+    ImageView edit, payment, delivered;
     Button logout, about, changePass, okCPass, noCPass, okCInfo, noCInfo;
     EditText curPass, newPass, cfNewPass,
         eName, ePhone, eEmail, eAddress;
@@ -104,14 +106,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });
 
         // Thanh toán
-
-        // Đơn hàng đang đến
-
+        payment.setOnClickListener(view -> startActivity(new Intent(getContext(), PaymentActivity.class)));
         // Đơn hàng đã mua
-
+        delivered.setOnClickListener(view -> startActivity(new Intent(getContext(), ListInvoiceActivity.class)));
         // About
-
+        about.setOnClickListener(view -> showAbout());
         return root;
+    }
+    void showAbout(){
+        String mess = getString(R.string.aboutme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("About me and App");
+        builder.setMessage(mess);
+        builder.setNegativeButton("OK", (dialog, which) -> dialog.dismiss());
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     void showNotification(String mess){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -140,8 +150,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     void mapping(){
         edit = root.findViewById(R.id.edit_info);
         payment = root.findViewById(R.id.payment);
-        shipping = root.findViewById(R.id.shipping);
-        delivered = root.findViewById(R.id.received);
+        delivered = root.findViewById(R.id.invoice);
 
         logout = root.findViewById(R.id.log_out);
         about = root.findViewById(R.id.about);

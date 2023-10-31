@@ -40,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean doubleClick = false;
      public static ArrayList<Product> itemList = new ArrayList<>(),
                                     listCart = new ArrayList<>(),
-                                    listShipping = new ArrayList<>(),
                                     listDelivered = new ArrayList<>();
-    public static ArrayList<String> arrBrand;
+    public static ArrayList<String> arrBrand, name_invoice = new ArrayList<>(),
+                                            phone_invoice = new ArrayList<>(),
+                                            add_invoice = new ArrayList<>();
     public static ArrayList<Integer> counts = new ArrayList<>(),
-                                    count_Ship = new ArrayList<>(),
-                                    count_Delivered = new ArrayList<>();
+                                    count_Delivered = new ArrayList<>(),
+                                    id_invoice = new ArrayList<>();
     public static Map<String, ArrayList<Integer>> brands = new HashMap<>();
     public static AdapterPhone itemAdapter;
     public static AdapterBrand adapterBrand;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     int newPosition, startingPosition=-1;
     Fragment fragment;
     public static User user = new User();
+    public static int lastIDInvoice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             LOAD_CART();
+            LOAD_INVOICE();
             getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment, new HomeFragment())
                         .commit();
@@ -167,42 +170,69 @@ public class MainActivity extends AppCompatActivity {
     void LOAD_ALL_DATA(Runnable callback) {
         LOAD_PHONE(() -> {
             LOAD_CART();
+            LOAD_INVOICE();
             callback.run();
         });
     }
-    void clearData(){
-        listDelivered.clear();
-        listCart.clear();
-        listShipping.clear();
-        counts.clear();
-        count_Delivered.clear();
-        count_Ship.clear();
-    }
-    void LOAD_CART(){
-        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/cart.json";
+
+    void LOAD_INVOICE(){
+        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/invoices.json";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
             response -> {
-                clearData();
+            listDelivered.clear();
+            count_Delivered.clear();
+            id_invoice.clear();
+            name_invoice.clear();
+            phone_invoice.clear();
+            add_invoice.clear();
+            lastIDInvoice = response.length();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject itemObject = response.getJSONObject(i);
-                        String id_user = itemObject.getString("ID_user");
-                        if (id_user.equals(user.getID())){
+                        int id_user = itemObject.getInt("ID_user");
+                        if (id_user == user.getID()){
                             int id_phone = itemObject.getInt("ID_phone");
                             int quantity = itemObject.getInt("quantity");
-                            String status = itemObject.getString("status");
+                            int id = itemObject.getInt("ID");
+                            String name = itemObject.getString("name"),
+                                    phone = itemObject.getString("phone"),
+                                    addr = itemObject.getString("address");
                             for (Product product : itemList){
                                 if (product.getId() == id_phone){
-                                    if (status.equals("pending")){
-                                        listCart.add(product);
-                                        counts.add(quantity);
-                                    } else if (status.equals("shipping")) {
-                                        listShipping.add(product);
-                                        count_Ship.add(quantity);
-                                    } else if (status.equals("delivered")) {
-                                        listDelivered.add(product);
-                                        count_Delivered.add(quantity);
-                                    }
+                                    listDelivered.add(product);
+                                    count_Delivered.add(quantity);
+                                    id_invoice.add(id);
+                                    name_invoice.add(name);
+                                    phone_invoice.add(phone);
+                                    add_invoice.add(addr);
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, error -> Toast.makeText(MainActivity.this, "Lỗi khi tải dữ liệu từ API", Toast.LENGTH_SHORT).show());
+        Volley.newRequestQueue(MainActivity.this).add(jsonArrayRequest);
+    }
+    void LOAD_CART(){
+        String urlAPI = "https://ndthrk.000webhostapp.com/LTMB/API/carts.json";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(urlAPI,
+            response -> {
+                listCart.clear();
+                counts.clear();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject itemObject = response.getJSONObject(i);
+                        int id_user = itemObject.getInt("ID_user");
+                        if (id_user == user.getID()){
+                            int id_phone = itemObject.getInt("ID_phone");
+                            int quantity = itemObject.getInt("quantity");
+                            for (Product product : itemList){
+                                if (product.getId() == id_phone){
+                                    listCart.add(product);
+                                    counts.add(quantity);
                                     break;
                                 }
                             }
@@ -266,18 +296,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sortListPhone(final String fieldName, final boolean increase) {
-        Collections.sort(itemList, new Comparator<Product>() {
-            @Override
-            public int compare(Product item1, Product item2) {
-                try {
-                    Field field = Product.class.getDeclaredField(fieldName);
-                    field.setAccessible(true);
-                    Comparable value1 = (Comparable) field.get(item1);
-                    Comparable value2 = (Comparable) field.get(item2);
-                    return (increase ? 1 : -1) * value1.compareTo(value2);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        Collections.sort(itemList, (item1, item2) -> {
+            try {
+                Field field = Product.class.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                Comparable value1 = (Comparable) field.get(item1);
+                Comparable value2 = (Comparable) field.get(item2);
+                return (increase ? 1 : -1) * value1.compareTo(value2);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
         itemAdapter.notifyDataSetChanged();
